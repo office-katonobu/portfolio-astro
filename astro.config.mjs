@@ -60,5 +60,10 @@ export default defineConfig({
   site: sideyConfig.site.url,
   vite: {
     plugins: [tailwindcss()],
-  },
+		server: {
+			watch: {
+				usePolling: true,
+			},
+		},
+	},	
 })
