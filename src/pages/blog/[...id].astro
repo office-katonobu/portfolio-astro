@@ -1,0 +1,29 @@
+---
+import { type CollectionEntry, render } from "astro:content"
+
+import BlogPage from "@layouts/pages/BlogPage.astro"
+import { getBlog } from "@utils/getContent"
+
+export async function getStaticPaths() {
+  const blogEntries = getBlog()
+
+  return (await blogEntries).map((blogEntry) => ({
+    params: { id: blogEntry.id },
+    props: { blogEntry },
+  }))
+}
+
+interface Props {
+  blogEntry: CollectionEntry<"blog">
+}
+
+const { blogEntry } = Astro.props
+const { Content, remarkPluginFrontmatter } = await render(blogEntry)
+---
+
+<BlogPage
+  frontmatter={blogEntry}
+  readingTime={remarkPluginFrontmatter.minutesRead}
+>
+  <Content />
+</BlogPage>

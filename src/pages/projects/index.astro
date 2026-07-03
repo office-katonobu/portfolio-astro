@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Prose from "@components/common/Prose.astro"
+import ProjectsCard from "@components/section/projects/ProjectsCard.astro"
+import { getProjects } from "@utils/getContent"
+
+const {
+  title = "Projects",
+  description = "A collection of projects on things worth exploring.",
+} = Astro.props
+
+const projectsEntries = await getProjects()
+---
+
+<BaseLayout title={title} description={description}>
+  <Prose>
+    <h1>Projects</h1>
+    <div class="not-prose flex flex-col gap-y-8">
+      {
+        projectsEntries.map((projectsEntry) => (
+          <ProjectsCard projectsEntry={projectsEntry} />
+        ))
+      }
+    </div>
+  </Prose>
+</BaseLayout>

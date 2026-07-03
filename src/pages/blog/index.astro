@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Prose from "@components/common/Prose.astro"
+import BlogCard from "@components/section/blog/BlogCard.astro"
+import { getBlog } from "@utils/getContent"
+
+const {
+  title = "Blog",
+  description = "A collection of blog posts on things worth exploring.",
+} = Astro.props
+
+const blogEntries = await getBlog()
+---
+
+<BaseLayout title={title} description={description}>
+  <Prose>
+    <h1>Blog</h1>
+    <div class="not-prose flex flex-col gap-y-8">
+      {
+        blogEntries.map((blogEntry) => (
+          <BlogCard blogEntry={blogEntry} />
+        ))
+      }
+    </div>
+  </Prose>
+</BaseLayout>
