@@ -36,11 +36,11 @@ export const sideyConfig = {
    */
   navigation: [
     { label: "Home", href: "/index" },
-    { label: "Writings", href: "/writings" },
     { label: "Projects", href: "/projects" },
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
     { label: "About", href: "/about" },
+//    { label: "RSS", href: "/rss.xml" },
   ],
 }
 
