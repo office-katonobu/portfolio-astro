@@ -36,6 +36,5 @@ export async function getContent<T extends CollectionKey>(
 
 // ---------- NAMED GETTER ----------
 export const getPages = () => getContent("pages", { sort: false })
-export const getWritings = () => getContent("writings")
 export const getProjects = () => getContent("projects")
 export const getBlog = () => getContent("blog")
