@@ -8,20 +8,24 @@ export const sideyConfig = {
    * and structural header components across the template.
    */
   site: {
-    // The main title displayed in browser tabs and search engine results
-    title: "Astro Sidey",
+    // ブラウザタブや検索結果に表示されるタイトル
+    title: "IoT・セキュリティコンサルティング | Nobuo",
 
-    // A short fallback summary of your site used for SEO and social share cards
-    description: "A minimal, content-focused Astro theme for personal sites.",
+    // SEO・SNSカードに使われる短い説明文
+    description: "IoT、製造業DX、地域情報管理を専門とするセキュリティコンサルタント。製品セキュリティ、LoRaWAN、OTセキュリティ、地域DXの安全設計を支援します。",
 
-    // The production domain where your site is deployed (no trailing slash)
-    url: "https://sidey.odhyp.com",
+    // 公開する本番URL（GitHub Pages / CloudFront / Vercel など）
+    url: "https://portfolio.office-katonobu.com",
 
-    // Your name, utilized in copyright strings and author meta tags
-    author: "Odhy Pradhana",
+    // 著者名（著作権表記やmetaタグに使用）
+    author: "Nobuo",
 
-    // The primary language attribute for HTML accessibility engines (e.g., "en", "id")
-    locale: "en",
+    // HTML の lang 属性（日本語サイトなら "ja"）
+    locale: "ja",
+  },
+
+  pages: {
+    home: "pages/index.mdx",
   },
 
   /**
@@ -31,10 +35,12 @@ export const sideyConfig = {
    * You can add, reorder, or remove objects here to update your site's structure.
    */
   navigation: [
-    { label: "Home", href: "/" },
+    { label: "Home", href: "/index" },
     { label: "Writings", href: "/writings" },
+    { label: "Projects", href: "/projects" },
+    { label: "Blog", href: "/blog" },
+    { label: "Contact", href: "/contact" },
     { label: "About", href: "/about" },
-    { label: "RSS", href: "/rss.xml" },
   ],
 }
 
