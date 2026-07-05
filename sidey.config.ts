@@ -24,10 +24,6 @@ export const sideyConfig = {
     locale: "ja",
   },
 
-  pages: {
-    home: "pages/index.mdx",
-  },
-
   /**
    * Primary Sidebar Navigation
    * -------------------------------------------------------------------------
@@ -35,7 +31,7 @@ export const sideyConfig = {
    * You can add, reorder, or remove objects here to update your site's structure.
    */
   navigation: [
-    { label: "Home", href: "/index" },
+    { label: "Home", href: "/" },
     { label: "Projects", href: "/projects" },
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
