@@ -1,0 +1,99 @@
+name: Build Documentation
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: 'Deploy stage'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - stg
+          - prd
+
+  push:
+    branches:
+      - main
+
+env:
+  STAGE: ${{ github.event_name == 'push' && 'dev' || github.event.inputs.stage }}
+  SERVICE: portfoliopage
+  AWS_REGION: ap-northeast-1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Display service,STAGE
+        run: |
+          # 環境変数の表示
+          echo "Service: ${{ env.SERVICE }}"
+          echo "STAGE: ${{ env.STAGE }}"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Astro
+        run: |
+          npm install
+          npm run build-${{ env.STAGE }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.SERVICE }}-${{ env.STAGE }}
+          path: dist
+          retention-days: 15          
+
+      # =========================
+      # stageごとの設定切替
+      # =========================
+      - name: Set stage config
+        id: stage
+        run: |
+          echo "STAGE=$STAGE" >> $GITHUB_ENV
+
+          if [ "$STAGE" = "prd" ]; then
+            echo "ACCOUNT_ID=179698341762" >> $GITHUB_ENV
+            echo "DIST_ID=E7ZAHL6SCDU7B" >> $GITHUB_ENV
+          elif [ "$STAGE" = "stg" ]; then
+            echo "ACCOUNT_ID=108241940789" >> $GITHUB_ENV
+            echo "DIST_ID=E2FCCPYJ2SS2S7" >> $GITHUB_ENV
+          else
+            echo "ACCOUNT_ID=357665575661" >> $GITHUB_ENV
+            echo "DIST_ID=E3NUOFEO2QG9C6" >> $GITHUB_ENV
+          fi
+
+      # =========================
+      # AWS認証（OIDC）
+      # =========================
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ env.ACCOUNT_ID }}:role/${{ env.SERVICE }}CodeGitHubRole
+
+      # =========================
+      # S3 deploy
+      # =========================
+      - name: Deploy to S3
+        run: |
+          aws s3 sync dist \
+            s3://frontend-${{ env.STAGE }}-${{ env.SERVICE }}-site \
+            --delete
+
+      # =========================
+      # CloudFront invalidate
+      # =========================
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ env.DIST_ID }} \
+            --paths "/*"

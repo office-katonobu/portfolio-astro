@@ -6,8 +6,14 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev --host",
-    "build": "astro build",
+    "dev": "VITE_ENV=dev VITE_BUILD_TIME=1967-09-17 astro dev --host",
+    "dev-dev": "VITE_ENV=dev VITE_BUILD_TIME=1967-09-17 astro dev --host",
+    "dev-stg": "VITE_ENV=stg VITE_BUILD_TIME=1967-09-17 astro dev --host",
+    "dev-prd": "VITE_ENV=prd VITE_BUILD_TIME=1967-09-17 astro dev --host",
+    "build": "VITE_ENV=dev VITE_BUILD_TIME=$(date +'%Y-%m-%d %H:%M:%S') astro build",
+    "build-dev": "VITE_ENV=dev VITE_BUILD_TIME=$(date +'%Y-%m-%d %H:%M:%S') astro build",
+    "build-stg": "VITE_ENV=stg VITE_BUILD_TIME=$(date +'%Y-%m-%d %H:%M:%S') astro build",
+    "build-prd": "VITE_ENV=prd VITE_BUILD_TIME=$(date +'%Y-%m-%d %H:%M:%S') astro build",
     "preview": "astro preview --host",
     "astro": "astro"
   },

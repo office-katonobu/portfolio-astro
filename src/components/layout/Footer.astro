@@ -1,24 +1,25 @@
 ---
+// src/components/layout/Footer.astro
 import { config } from "@parseConfig"
 
-const year = new Date().getFullYear()
+const year = new Date().getFullYear();
+
+// 環境変数の取得
+const envTarget = import.meta.env.VITE_ENV || 'dev';
+const buildTime = import.meta.env.VITE_BUILD_TIME || 'Unknown';
+
+// ステージ名の変換ロジック
+const envTargetMap: Record<string, string> = {
+  prd: " ",
+  stg: "（ステージング環境）",
+  dev: "（開発環境）"
+};
+const envTargetStr = envTargetMap[envTarget] || `（不明環境:${envTarget}）`;
 ---
 
-<footer
-  class="mt-16 inline-flex items-baseline justify-between gap-x-4 pt-8 text-xs text-muted-foreground sm:text-sm"
->
-  <p>
-    &copy; {year}
-    <span class="font-medium text-foreground/80">{config.site.author}</span>
-  </p>
-
-  <p>
-    Built with <a
-      href="https://github.com/odhyp/astro-sidey"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="font-medium text-foreground/80 underline underline-offset-2 transition-colors duration-200 ease-out hover:text-foreground"
-      >Astro Sidey</a
-    >
+<footer class="mt-16 pt-8 text-xs text-muted-foreground sm:text-sm">
+  <p class="mt-2">
+    &copy; {year} {config.site.author}. All rights reserved.
+    Updated at {buildTime} {envTargetStr}
   </p>
 </footer>
