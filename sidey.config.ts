@@ -32,8 +32,8 @@ export const sideyConfig = {
    */
   navigation: [
     { label: "Home", href: "/" },
-    { label: "Projects", href: "/projects" },
-    { label: "Blog", href: "/blog" },
+//    { label: "Projects", href: "/projects" },
+//    { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
     { label: "About", href: "/about" },
 //    { label: "RSS", href: "/rss.xml" },
