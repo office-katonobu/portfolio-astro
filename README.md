@@ -1,6 +1,11 @@
 # portfolio-astro
 ポートフォリオサイト
 
+# 現状
+- blog,projectsとも、`draft: true`になっているので変換されない。
+  - `draft: false`にすれば変換対象になる。
+
+
 ## 動的ページ追加
 - sidey.config.ts
   - sideyConfig.navigation に要素を追加。
